@@ -553,6 +553,24 @@
     </div>
 </section>
 
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const form = document.querySelector('#contact form');
+            const btn = document.querySelector('.submit-btn');
+
+            if (form && btn) {
+                form.addEventListener('submit', () => {
+                    btn.disabled = true;
+                    btn.querySelector('.btn-text')?.classList.add('d-none');
+                    btn.querySelector('.btn-loader')?.classList.remove('d-none');
+                });
+            }
+
+        });
+    </script>
+}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const alerts = document.querySelectorAll(".auto-hide-alert");

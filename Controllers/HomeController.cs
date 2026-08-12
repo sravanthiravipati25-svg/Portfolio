@@ -33,13 +33,17 @@ public class HomeController : Controller
         {
             await _emailService.SendAsync(model.Name, model.Email, model.Message);
 
-            TempData["Success"] = "Your message has been sent successfully. I’ll get back to you soon.";
+            TempData["Success"] =
+                "Thank you! Your message has been sent successfully. I'll get back to you soon.";
+
             return RedirectToAction(nameof(Index));
         }
-        catch
+        catch (Exception ex)
         {
-            TempData["Error"] = "Sorry, something went wrong while sending your message.";
-            return View("Index", model);
+            TempData["Error"] =
+                "Sorry, the message could not be sent right now. Please email me directly at sravanthiravipati25@gmail.com";
+
+            return RedirectToAction(nameof(Index));
         }
-}
+    }
 }
