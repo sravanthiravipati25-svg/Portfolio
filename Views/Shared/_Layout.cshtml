@@ -3,34 +3,218 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] - Sravanthi</title>
 
-    <!-- Bootstrap 5.3 & Icons -->
+    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        :root {
+            --bg: #060816;
+            --surface: rgba(12, 18, 38, 0.78);
+            --surface-2: rgba(16, 24, 52, 0.82);
+            --line: rgba(255,255,255,0.08);
+            --text: #e8eefc;
+            --muted: #9fb0d4;
+            --cyan: #67e8f9;
+            --blue: #3b82f6;
+            --indigo: #7c3aed;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at 20% 10%, rgba(59,130,246,0.16), transparent 32rem), radial-gradient(circle at 80% 30%, rgba(124,58,237,0.14), transparent 28rem), linear-gradient(180deg, #040714 0%, #060816 45%, #070b18 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+            /* Floating background particles */
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                background-image: radial-gradient(rgba(103,232,249,.12) 1px, transparent 1px), radial-gradient(rgba(59,130,246,.08) 1px, transparent 1px);
+                background-size: 120px 120px, 180px 180px;
+                background-position: 0 0, 40px 60px;
+                mask-image: linear-gradient(to bottom, black, transparent 92%);
+                z-index: -1;
+            }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(6, 8, 22, 0.55) !important;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+            transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+        }
+
+            .navbar.scrolled {
+                background: rgba(6, 8, 22, 0.78) !important;
+                border-color: rgba(255,255,255,0.10) !important;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+            }
+
+        .navbar-brand {
+            font-weight: 800;
+            letter-spacing: -.03em;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, var(--cyan), #8ab4ff, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+            animation: hueShift 8s linear infinite;
+        }
+
+        @@keyframes hueShift {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .nav-link {
+            color: #c9d6f3 !important;
+            font-weight: 600;
+            padding: .6rem .95rem !important;
+            border-radius: 999px;
+            transition: all .25s ease;
+            position: relative;
+        }
+
+            .nav-link:hover,
+            .nav-link.active {
+                color: white !important;
+                background: rgba(255,255,255,0.06);
+                box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+            }
+
+                .nav-link.active::after {
+                    content: "";
+                    position: absolute;
+                    left: 50%;
+                    bottom: -6px;
+                    width: 18px;
+                    height: 3px;
+                    transform: translateX(-50%);
+                    border-radius: 999px;
+                    background: linear-gradient(90deg, var(--cyan), var(--blue));
+                    box-shadow: 0 0 12px rgba(103,232,249,.8);
+                }
+
+        .navbar-toggler {
+            border-color: rgba(255,255,255,.15);
+        }
+
+        /* Main spacing */
+        main {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Glass utility */
+        .glass {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 1px solid var(--line);
+            box-shadow: 0 20px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+            backdrop-filter: blur(18px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(6,8,22,.85) !important;
+            backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255,255,255,.08) !important;
+        }
+
+            footer p {
+                color: var(--muted) !important;
+            }
+
+        /* Floating glow */
+        .cursor-glow {
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(103,232,249,.16), rgba(59,130,246,.10), transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(10px);
+        }
+
+        .brand-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #67e8f9;
+            box-shadow: 0 0 14px #67e8f9;
+        }
+
+        /* Reduce motion */
+        @@media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
+    <!-- Mouse glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-opacity-75 fixed-top backdrop-blur border-bottom border-secondary border-opacity-25">
-        <div class="container">
-            <a class="navbar-brand fw-bold fs-4 text-gradient" href="#">Ravipati Naga Sravanthi</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container py-2">
+
+            <a class="navbar-brand fw-bold text-white d-flex align-items-center gap-2" href="#hero">
+                <span class="brand-dot"></span>
+                Ravipati Naga Sravanthi
+            </a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#nav"
+                    aria-controls="nav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="nav">
-                <ul class="navbar-nav ms-auto gap-lg-2">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2 mt-3 mt-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
                     <li class="nav-item"><a class="nav-link" href="#benchmarks">Performance</a></li>
                     <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#certifications">Certificates</a></li>
                     <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
@@ -43,117 +227,136 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-white py-4 border-top border-secondary border-opacity-25">
-        <div class="container text-center">
-            <p class="mb-0 text-light-emphasis">© 2026 Ravipati Naga Sravanthi • Built with ASP.NET Core 8 & 3D Interactive CSS</p>
+    <footer class="py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+
+                <div>
+                    <div class="fw-semibold text-white">Ravipati Naga Sravanthi</div>
+                    <small>ASP.NET Core • React • SQL Optimization • Docker</small>
+                </div>
+
+                <div class="d-flex gap-3 fs-5">
+                    <a href="https://github.com/sravanthiravipati25-svg" target="_blank" class="text-light opacity-75 hover-opacity-100"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/naga-sravanthi-ravipati-244561213/" target="_blank" class="text-light opacity-75 hover-opacity-100"><i class="bi bi-linkedin"></i></a>
+                    <a href="mailto:sravanthiravipati25@gmail.com" class="text-light opacity-75 hover-opacity-100"><i class="bi bi-envelope-fill"></i></a>
+                </div>
+
+                <small class="text-light-emphasis text-center text-md-end">
+                    © 2026 Built with ASP.NET Core 8
+                </small>
+            </div>
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle -->
+    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- 3D INTERACTIVE TILT & CANVAS ANIMATION SCRIPT -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', () => {
 
-            // 1. VANILLA JS 3D CARD TILT CONTROLLER
-            const tiltCards = document.querySelectorAll('.tilt-card');
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
 
-            tiltCards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
+            const onScroll = () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 12);
+            };
 
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
+            onScroll();
+            window.addEventListener('scroll', onScroll);
 
-                    const rotateX = ((y - centerY) / centerY) * -12; // Max rotation depth
-                    const rotateY = ((x - centerX) / centerX) * 12;
+            // Active nav highlighting
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
 
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle(
+                                'active',
+                                link.getAttribute('href') === `#${entry.target.id}`
+                            );
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.35
+            });
+
+            sections.forEach(section => observer.observe(section));
+
+            // Auto close mobile navbar when clicking a nav link
+            const navCollapse = document.getElementById('nav');
+
+            if (navCollapse) {
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(navCollapse, {
+                    toggle: false
                 });
 
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                document.querySelectorAll('#nav .nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+
+                        // Close only on mobile/tablet
+                        if (window.innerWidth < 992 && navCollapse.classList.contains('show')) {
+                            bsCollapse.hide();
+                        }
+                    });
+                });
+            }
+
+            // 3D tilt cards
+            document.querySelectorAll('.tilt-card').forEach(card => {
+
+                card.addEventListener('pointermove', e => {
+                    const r = card.getBoundingClientRect();
+
+                    const rx = (e.clientY - r.top - r.height / 2) / r.height * -10;
+                    const ry = (e.clientX - r.left - r.width / 2) / r.width * 10;
+
+                    card.style.transform =
+                        `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+                });
+
+                card.addEventListener('pointerleave', () => {
+                    card.style.transform =
+                        'perspective(1200px) rotateX(0) rotateY(0) translateY(0)';
                 });
             });
 
-            // 2. HERO CANVAS 3D INTERACTIVE PARTICLE SYSTEM
-            const canvas = document.getElementById('hero-canvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let width = canvas.width = window.innerWidth;
-                let height = canvas.height = window.innerHeight;
+            // Mouse glow
+            const glow = document.getElementById('cursorGlow');
 
-                window.addEventListener('resize', () => {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
+            if (glow) {
+                window.addEventListener('pointermove', e => {
+                    glow.style.left = `${e.clientX}px`;
+                    glow.style.top = `${e.clientY}px`;
                 });
-
-                const particles = Array.from({ length: 45 }, () => ({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 2 + 1,
-                    vx: (Math.random() - 0.5) * 0.6,
-                    vy: (Math.random() - 0.5) * 0.6
-                }));
-
-                function render() {
-                    ctx.clearRect(0, 0, width, height);
-
-                    particles.forEach((p, i) => {
-                        p.x += p.vx;
-                        p.y += p.vy;
-
-                        if (p.x < 0 || p.x > width) p.vx *= -1;
-                        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(103, 232, 249, 0.4)';
-                        ctx.fill();
-
-                        for (let j = i + 1; j < particles.length; j++) {
-                            const p2 = particles[j];
-                            const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                            if (dist < 120) {
-                                ctx.beginPath();
-                                ctx.moveTo(p.x, p.y);
-                                ctx.lineTo(p2.x, p2.y);
-                                ctx.strokeStyle = `rgba(79, 140, 255, ${0.15 * (1 - dist / 120)})`;
-                                ctx.stroke();
-                            }
-                        }
-                    });
-
-                    requestAnimationFrame(render);
-                }
-
-                render();
             }
 
-            // 3. AUTO HIDE ALERTS
-            const alerts = document.querySelectorAll(".auto-hide-alert");
-            alerts.forEach(alert => {
+            // Auto-hide alerts
+            document.querySelectorAll('.auto-hide-alert').forEach(alert => {
                 setTimeout(() => {
-                    alert.classList.remove("show");
+                    alert.classList.remove('show');
                     setTimeout(() => alert.remove(), 400);
                 }, 6000);
             });
 
-            // 4. CONTACT FORM BUTTON LOADING EFFECT
-            const form = document.querySelector("#contact form");
-            const btn = document.querySelector(".submit-btn");
+            // Contact button loading
+            const form = document.querySelector('#contact form');
+            const btn = document.querySelector('.submit-btn');
 
             if (form && btn) {
-                form.addEventListener("submit", () => {
+                form.addEventListener('submit', () => {
                     btn.disabled = true;
-                    btn.querySelector(".btn-text").classList.add("d-none");
-                    btn.querySelector(".btn-loader").classList.remove("d-none");
+
+                    btn.querySelector('.btn-text')?.classList.add('d-none');
+                    btn.querySelector('.btn-loader')?.classList.remove('d-none');
                 });
             }
+
         });
     </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
