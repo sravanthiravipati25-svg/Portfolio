@@ -623,43 +623,128 @@ body {
         margin: 0;
     }
 
-/* -------------------------------------------------------------
-   EXPERIENCE TIMELINE (3D SECTION)
-------------------------------------------------------------- */
-.timeline-container {
+/* ===== EXPERIENCE SECTION ===== */
+
+.experience-wrapper {
     position: relative;
-    padding-left: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-    .timeline-container::before {
-        content: '';
+.experience-item {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 2rem;
+}
+
+.experience-marker {
+    position: relative;
+    width: 44px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+}
+
+    .experience-marker::before {
+        content: "";
         position: absolute;
-        left: 0;
-        top: 10px;
-        bottom: 10px;
+        top: 0;
+        bottom: 0;
         width: 3px;
-        background: linear-gradient(180deg, var(--cyan), var(--primary), var(--purple));
-        border-radius: 3px;
+        border-radius: 999px;
+        background: linear-gradient( 180deg, #67e8f9 0%, #3b82f6 50%, #a855f7 100% );
+        opacity: 0.9;
     }
 
-.timeline-item {
+.experience-dot {
     position: relative;
-    margin-bottom: 2.5rem;
-}
-
-.timeline-dot {
-    position: absolute;
-    left: -2rem;
-    top: 1.5rem;
-    transform: translateX(-50%);
-    width: 18px;
-    height: 18px;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 15px var(--cyan);
-    border: 3px solid var(--bg);
+    background: #67e8f9;
+    border: 4px solid #071124;
+    box-shadow: 0 0 0 6px rgba(103, 232, 249, 0.12), 0 0 22px rgba(103, 232, 249, 0.7);
+    margin-top: 1.25rem;
 }
 
+.experience-card {
+    flex: 1;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient( 135deg, rgba(10, 18, 40, 0.92), rgba(7, 12, 28, 0.96) );
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+    .experience-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(103, 232, 249, 0.35);
+        box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55), 0 0 30px rgba(59, 130, 246, 0.18);
+    }
+
+.experience-badge {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
+    border: none;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+}
+
+.experience-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+    .experience-list li {
+        position: relative;
+        padding-left: 1.75rem;
+        margin-bottom: 1rem;
+        line-height: 1.7;
+    }
+
+        .experience-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .experience-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #67e8f9;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+.text-cyan {
+    color: #67e8f9 !important;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .experience-item {
+        gap: 1rem;
+    }
+
+    .experience-marker {
+        width: 32px;
+    }
+
+    .experience-dot {
+        width: 18px;
+        height: 18px;
+        margin-top: 1rem;
+    }
+
+    .experience-card {
+        border-radius: 1.5rem;
+    }
+}
 /* -------------------------------------------------------------
    BENCHMARK SHOWCASE CARDS (BEFORE VS AFTER)
 ------------------------------------------------------------- */
