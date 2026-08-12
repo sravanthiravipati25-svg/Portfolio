@@ -1,0 +1,29 @@
+# -------- Build stage --------
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copy csproj and restore dependencies
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy the rest of the source code
+COPY . .
+
+# Publish the application
+RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
+
+
+# -------- Runtime stage --------
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+
+# Copy published output
+COPY --from=build /app/publish .
+
+# Render uses port 10000 by default for Docker services
+ENV ASPNETCORE_URLS=http://+:10000
+ENV ASPNETCORE_ENVIRONMENT=Production
+
+EXPOSE 10000
+
+ENTRYPOINT ["dotnet", "Portfolio.dll"]
