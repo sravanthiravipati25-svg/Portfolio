@@ -44,7 +44,10 @@ public class EmailService : IEmailService
 
         using var smtp = new SmtpClient();
 
-        // 15 second timeout
+        // Accept TLS certificates
+        smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+        // Set a shorter timeout
         smtp.Timeout = 15000;
 
         await smtp.ConnectAsync(
@@ -57,7 +60,6 @@ public class EmailService : IEmailService
             _settings.Password);
 
         await smtp.SendAsync(emailMessage);
-
         await smtp.DisconnectAsync(true);
     }
     /*public async Task SendAsync(string name, string email, string message)

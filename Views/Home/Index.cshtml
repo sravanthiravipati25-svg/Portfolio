@@ -93,35 +93,43 @@
                 </div>
             </div>
 
-            <div class="col-lg-5 d-none d-lg-block mt-5 mt-lg-0">
-                <div class="glass-panel p-4 tilt-card text-center position-relative">
+            <div class="col-12 col-lg-5 mt-5 mt-lg-0">
+                <div class="glass-panel hero-profile-card tilt-card position-relative h-100">
 
-                    <!-- Live Status Pill -->
-                    <div class="position-absolute top-0 end-0 m-3 tilt-child-deep">
-                        <span class="badge bg-success-subtle text-success border border-success px-3 py-2 rounded-pill d-flex align-items-center gap-2">
-                            <span class="spinner-grow spinner-grow-sm text-success" style="width: 8px; height: 8px;"></span>
-                            Open for Ops
-                        </span>
+                    <!-- Status pill -->
+                    <div class="status-pill">
+                        <span class="spinner-grow spinner-grow-sm text-success"></span>
+                        <span>Open for Opportunities</span>
                     </div>
 
-                    <div class="d-flex justify-content-center mb-4 tilt-child-flat">
-                        <div class="avatar-ring position-relative" style="transform: translateZ(0) !important;">
-                            <img src="~/profileImage/ProfilePicture.png"
-                                 alt="Ravipati Naga Sravanthi"
-                                 class="rounded-circle img-fluid w-100 h-100 object-fit-cover shadow-lg border border-2 border-white border-opacity-25" />
+                    <!-- Avatar -->
+                    <div class="avatar-wrapper no-tilt">
 
-                            <!-- Floating 3D Badge -->
-                            <div class="position-absolute bottom-0 end-0 bg-dark p-2 rounded-circle border border-info shadow-lg tilt-child-deep" style="transform: translate(10%, 10%);">
-                                <i class="bi bi-patch-check-fill text-info fs-4"></i>
-                            </div>
+                        <div class="avatar-ring">
+                            <img src="~/profileImage/ProfilePicture.png"
+                                 asp-append-version="true"
+                                 alt="Ravipati Naga Sravanthi"
+                                 class="profile-avatar" />
+                        </div>
+
+                        <div class="verified-badge">
+                            <i class="bi bi-patch-check-fill"></i>
+                        </div>
+
+                    </div>
+
+                    <!-- Name & role -->
+                    <div class="text-center mt-4">
+                        <h3 class="profile-name mb-2">Ravipati Naga Sravanthi</h3>
+                        <div class="profile-role mb-2">.NET Full-Stack Engineer</div>
+                        <div class="profile-company">
+                            <i class="bi bi-building me-1"></i>
+                            Chetu Inc. • Full-Time
                         </div>
                     </div>
 
-                    <h4 class="text-white fw-bold tilt-child mb-1">Ravipati Naga Sravanthi</h4>
-                    <p class="text-cyan fw-semibold small mb-1 tilt-child">.NET Full-Stack Engineer</p>
-                    <p class="text-light-emphasis small mb-4 tilt-child"><i class="bi bi-building me-1"></i>Chetu Inc. • Full-Time</p>
-
-                    <div class="tech-stack justify-content-center tilt-child-deep">
+                    <!-- Tech pills -->
+                    <div class="tech-pills mt-4">
                         <span class="tech-pill">ASP.NET Core 8</span>
                         <span class="tech-pill">C# Data Structures</span>
                         <span class="tech-pill">SQL Optimization</span>
@@ -130,6 +138,7 @@
                         <span class="tech-pill">EF Core</span>
                         <span class="tech-pill">Docker</span>
                     </div>
+
                 </div>
             </div>
         </div>
