@@ -52,10 +52,7 @@ public class EmailService : IEmailService
 
         _logger.LogInformation("Connecting to Gmail SMTP...");
 
-        await smtp.ConnectAsync(
-            "smtp.gmail.com",
-            587,
-            SecureSocketOptions.StartTls);
+        await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls);
 
         _logger.LogInformation("Connected to Gmail SMTP");
 
