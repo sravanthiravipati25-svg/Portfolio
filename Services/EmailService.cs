@@ -1,7 +1,5 @@
-using MailKit.Net.Smtp;
-using MailKit.Security;
 using Microsoft.Extensions.Options;
-using MimeKit;
+using System.Net.Http.Json;
 
 namespace Portfolio.Services;
 
@@ -19,55 +17,54 @@ public class EmailService : IEmailService
     }
     public async Task SendAsync(string name, string email, string message)
     {
-        var emailMessage = new MimeMessage();
+        using var client = new HttpClient();
 
-        emailMessage.From.Add(new MailboxAddress("Portfolio Website", _settings.From));
-        emailMessage.To.Add(MailboxAddress.Parse(_settings.To));
-        emailMessage.ReplyTo.Add(MailboxAddress.Parse(email));
+        client.DefaultRequestHeaders.Add("api-key", _settings.Password);
 
-        emailMessage.Subject = $"New Portfolio Contact from {name}";
-
-        var safeMessage = System.Net.WebUtility.HtmlEncode(message)
-            .Replace(Environment.NewLine, "<br/>");
-
-        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+        var body = new
         {
-            Text = $@"
+            sender = new
+            {
+                name = "Portfolio Website",
+                email = _settings.From
+            },
+            to = new[]
+            {
+            new { email = _settings.To }
+        },
+            replyTo = new
+            {
+                email = email
+            },
+            subject = $"New Portfolio Contact from {name}",
+            htmlContent = $@"
             <h2>New Portfolio Contact</h2>
             <p><strong>Name:</strong> {System.Net.WebUtility.HtmlEncode(name)}</p>
             <p><strong>Email:</strong> {System.Net.WebUtility.HtmlEncode(email)}</p>
             <hr/>
             <p><strong>Message:</strong></p>
-            <p>{safeMessage}</p>
+            <p>{System.Net.WebUtility.HtmlEncode(message).Replace(Environment.NewLine, "<br/>")}</p>
         "
         };
 
-        using var smtp = new SmtpClient();
+        _logger.LogInformation("Sending email via Brevo HTTP API...");
 
-        smtp.Timeout = 30000;
+        var response = await client.PostAsJsonAsync(
+            "https://api.brevo.com/v3/smtp/email",
+            body);
 
-        _logger.LogInformation("SMTP Host: {Host}", _settings.Host);
-        _logger.LogInformation("SMTP Port: {Port}", _settings.Port);
+        var responseText = await response.Content.ReadAsStringAsync();
 
-        await smtp.ConnectAsync(
-            _settings.Host,
-            _settings.Port,
-            MailKit.Security.SecureSocketOptions.SslOnConnect);
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogError("Brevo API failed: {Status} - {Body}",
+                response.StatusCode, responseText);
 
-        _logger.LogInformation("Connected to SMTP server");
+            throw new Exception($"Brevo API failed: {responseText}");
+        }
 
-        await smtp.AuthenticateAsync(
-            _settings.UserName,
-            _settings.Password);
-
-        _logger.LogInformation("Authenticated successfully");
-
-        await smtp.SendAsync(emailMessage);
-
-        _logger.LogInformation("Email sent successfully");
-
-        await smtp.DisconnectAsync(true);
-    }    /*public async Task SendAsync(string name, string email, string message)
+        _logger.LogInformation("Email sent successfully via Brevo API");
+    }   /*public async Task SendAsync(string name, string email, string message)
     {
         var emailMessage = new MimeMessage();
 
