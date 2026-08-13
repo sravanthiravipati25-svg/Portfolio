@@ -9,7 +9,9 @@ public class HomeController : Controller
     private readonly IEmailService _emailService;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(IEmailService emailService, ILogger<HomeController> logger)
+    public HomeController(
+        IEmailService emailService,
+        ILogger<HomeController> logger)
     {
         _emailService = emailService;
         _logger = logger;
@@ -25,25 +27,26 @@ public class HomeController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Contact(ContactFormModel model)
     {
-        _logger.LogInformation("Contact form submitted from {Email}", model.Email);
-
         if (!ModelState.IsValid)
         {
-            _logger.LogWarning("Contact form validation failed");
-            TempData["Error"] = "Please fix the validation errors and try again.";
+            TempData["Error"] =
+                "Please fix the validation errors and try again.";
+
             return View("Index", model);
         }
 
         try
         {
-            _logger.LogInformation("Calling EmailService...");
+            _logger.LogInformation(
+                "Contact form submitted from {Email}", model.Email);
 
-            await _emailService.SendAsync(model.Name, model.Email, model.Message);
-
-            _logger.LogInformation("EmailService completed successfully");
+            await _emailService.SendAsync(
+                model.Name,
+                model.Email,
+                model.Message);
 
             TempData["Success"] =
-                "Thank you! Your message has been sent successfully.";
+                "Thank you! Your message has been sent successfully. I'll get back to you soon.";
 
             return RedirectToAction(nameof(Index));
         }
@@ -52,10 +55,9 @@ public class HomeController : Controller
             _logger.LogError(ex, "Contact form email failed");
 
             TempData["Error"] =
-                "Sorry, the message could not be sent right now.";
+                "Sorry, the message could not be sent right now. Please email me directly at sravanthiravipati25@gmail.com";
 
             return RedirectToAction(nameof(Index));
         }
     }
 }
-

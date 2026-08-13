@@ -23,19 +23,6 @@ body {
 .section-dark-alt {
     background: var(--bg-alt);
 }
-
-/*.hero-section {
-    background: radial-gradient(circle at 20% 20%, rgba(79,140,255,.25), transparent 35%), radial-gradient(circle at 80% 30%, rgba(103,232,249,.18), transparent 30%), var(--bg);
-}
-
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: linear-gradient(to bottom, black, transparent 85%);
-}
-*/
 .text-gradient {
     background: linear-gradient(90deg, #67e8f9, #4f8cff, #8b5cf6);
     -webkit-background-clip: text;
