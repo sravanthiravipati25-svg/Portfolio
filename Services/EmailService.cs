@@ -48,12 +48,11 @@ public class EmailService : IEmailService
 
         _logger.LogInformation("SMTP Host: {Host}", _settings.Host);
         _logger.LogInformation("SMTP Port: {Port}", _settings.Port);
-        _logger.LogInformation("SMTP User: {User}", _settings.UserName);
 
         await smtp.ConnectAsync(
             _settings.Host,
             _settings.Port,
-            MailKit.Security.SecureSocketOptions.StartTls);
+            MailKit.Security.SecureSocketOptions.SslOnConnect);
 
         _logger.LogInformation("Connected to SMTP server");
 
