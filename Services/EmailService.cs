@@ -44,17 +44,18 @@ public class EmailService : IEmailService
 
         using var smtp = new SmtpClient();
 
-        // 15 second timeout
-        smtp.Timeout = 15000;
+        smtp.Timeout = 30000;
 
-        // Accept TLS certificate
-        smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+        _logger.LogInformation("SMTP Host: {Host}", _settings.Host);
+        _logger.LogInformation("SMTP Port: {Port}", _settings.Port);
+        _logger.LogInformation("SMTP User: {User}", _settings.UserName);
 
-        _logger.LogInformation("Connecting to Gmail SMTP...");
+        await smtp.ConnectAsync(
+            _settings.Host,
+            _settings.Port,
+            MailKit.Security.SecureSocketOptions.StartTls);
 
-        await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls);
-
-        _logger.LogInformation("Connected to Gmail SMTP");
+        _logger.LogInformation("Connected to SMTP server");
 
         await smtp.AuthenticateAsync(
             _settings.UserName,
@@ -67,8 +68,7 @@ public class EmailService : IEmailService
         _logger.LogInformation("Email sent successfully");
 
         await smtp.DisconnectAsync(true);
-    }
-    /*public async Task SendAsync(string name, string email, string message)
+    }    /*public async Task SendAsync(string name, string email, string message)
     {
         var emailMessage = new MimeMessage();
 
