@@ -44,22 +44,31 @@ public class EmailService : IEmailService
 
         using var smtp = new SmtpClient();
 
-        // Accept TLS certificates
-        smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
-
-        // Set a shorter timeout
+        // 15 second timeout
         smtp.Timeout = 15000;
 
+        // Accept TLS certificate
+        smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+        _logger.LogInformation("Connecting to Gmail SMTP...");
+
         await smtp.ConnectAsync(
-            _settings.Host,
-            _settings.Port,
+            "smtp.gmail.com",
+            587,
             SecureSocketOptions.StartTls);
+
+        _logger.LogInformation("Connected to Gmail SMTP");
 
         await smtp.AuthenticateAsync(
             _settings.UserName,
             _settings.Password);
 
+        _logger.LogInformation("Authenticated successfully");
+
         await smtp.SendAsync(emailMessage);
+
+        _logger.LogInformation("Email sent successfully");
+
         await smtp.DisconnectAsync(true);
     }
     /*public async Task SendAsync(string name, string email, string message)
